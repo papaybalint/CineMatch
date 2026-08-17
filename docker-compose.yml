@@ -1,0 +1,12 @@
+services:
+  # 1. Backend Szolgáltatás (Node.js Express)
+  backend:
+    build: ./server
+    ports:
+      - "3000:3000"
+
+  # 2. Frontend Szolgáltatás (React + Vite)
+  frontend:
+    build: ./client
+    ports:
+      - "5175:5175"
