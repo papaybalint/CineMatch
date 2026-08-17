@@ -1,12 +1,18 @@
 services:
-  # 1. Backend Szolgáltatás (Node.js Express)
+  # 1. Backend Szolgáltatás
   backend:
     build: ./server
     ports:
       - "3000:3000"
+    volumes:
+      - ./server:/app             # Élőben összeköti a te server/ mappádat a konténer /app mappájával!
+      - /app/node_modules         # Megvédi a konténeren belüli node_modules-t
 
-  # 2. Frontend Szolgáltatás (React + Vite)
+  # 2. Frontend Szolgáltatás
   frontend:
     build: ./client
     ports:
       - "5175:5175"
+    volumes:
+      - ./client:/app             # Élőben összeköti a te client/ mappádat a konténer /app mappájával!
+      - /app/node_modules         # Megvédi a konténeren belüli node_modules-t
