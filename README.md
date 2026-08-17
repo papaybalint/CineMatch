@@ -1,42 +1,54 @@
-# React + Vite
+# CineMatch AI – Full-Stack & Dockerized App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ez a projekt a **CineMatch AI** alkalmazás Dockerizált fejlesztői környezete (React + Node.js Express).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Gyorsindítás (Quick Start)
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-## After restructuring (client / backend)
-
-I moved the frontend files into the `client` folder and created an empty `backend` folder for server code. The project root now contains helper scripts to run the client/backend from the repository root.
-
-How to run the frontend (recommended):
+A projekt futtatásához mindössze **Docker** és **Docker Compose** szükséges. Nincs szükség helyi Node.js vagy npm telepítésre!
 
 ```bash
-cd client
-npm install
-npm run dev
+# 1. Klónozd a tárolót (ha szükséges)
+git clone <repo-url>
+cd CineMatch
+
+# 2. Indítsd el a teljes alkalmazást egyetlen paranccsal!
+docker compose up --build
 ```
 
-Or run from the project root using the included proxy scripts:
+---
 
-```bash
-npm run client:install
-npm run client:dev
+## 🌐 Elérhetőségek
+
+* **Frontend (React 18 + Vite):** [http://localhost:5175](http://localhost:5175)
+* **Backend API (Node.js Express):** [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 📁 Projekt Szerkezet
+
+```text
+CineMatch/
+├── client/                  # React (Vite) frontend alkalmazás
+│   ├── Dockerfile           # Frontend Docker konfiguráció (Port: 5175)
+│   ├── .dockerignore
+│   └── vite.config.js       # Vite host & port beállítások
+├── server/                  # Node.js Express backend API
+│   ├── Dockerfile           # Backend Docker konfiguráció (Port: 3000)
+│   ├── .dockerignore
+│   └── server.js            # Express szerver (node --watch)
+└── docker-compose.yml       # Összekötő konfiguráció (Hot Reload támogatással)
 ```
 
-Notes:
-- `client/package.json` contains the frontend `scripts` (dev, build, preview). Run commands inside `client/` or use the root proxy scripts above.
-- `backend/` is currently empty — when you add server code, put its own `package.json` in `backend/` and use `npm run backend:dev` from the root (or `cd backend` and run scripts there).
+---
 
-If you'd like, I can convert this repo into an npm workspace later so both `client` and `backend` are managed together.
+## 🛠️ Hasznos Docker Compose Parancsok
 
+| Parancs | Leírás |
+| :--- | :--- |
+| `docker compose up` | Elindítja a környezetet a terminálban (élő logok) |
+| `docker compose up -d` | Elindítja a környezetet a háttérben (detached mód) |
+| `docker compose up --build` | Újraépíti az Image-eket és elindítja a konténereket |
+| `docker compose down` | Leállítja és eltávolítja a futó konténereket és a hálózatot |
+| `docker compose logs -f` | Megjeleníti az élő logokat háttérben futás esetén |
