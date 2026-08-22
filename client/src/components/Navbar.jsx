@@ -1,6 +1,9 @@
 import { navLinks, imgSearch } from '../data/movieData'
+import { useState } from 'react'
 
 export default function Navbar() {
+  const [search, setSearch] = useState('')
+
   return (
     <header className="topbar">
       <div className="nav-left">
@@ -22,7 +25,13 @@ export default function Navbar() {
         <span className="search-icon-wrap">
           <img src={imgSearch} alt="" className="search-icon" />
         </span>
-        <span className="search-placeholder">Search movies and TV shows...</span>
+        <input
+          className='search-input'
+          type="text"
+          placeholder="Search movies and TV shows..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
 
       <div className="nav-right">
