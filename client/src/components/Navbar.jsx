@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 export default function Navbar() {
   const [search, setSearch] = useState('')
+  const [activeTab, setActiveTab] = useState(navLinks[0])
 
   return (
     <header className="topbar">
@@ -13,8 +14,8 @@ export default function Navbar() {
         </div>
 
         <nav className="nav-links" aria-label="Main navigation">
-          {navLinks.map((link, index) => (
-            <span key={link} className={index === 0 ? 'nav-link active' : 'nav-link'}>
+          {navLinks.map((link) => (
+            <span key={link} onClick={() => setActiveTab(link)} className={activeTab === link ? 'nav-link active' : 'nav-link'}>
               {link}
             </span>
           ))}
