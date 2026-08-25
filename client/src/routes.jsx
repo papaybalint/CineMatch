@@ -6,6 +6,8 @@ import Home from './components/Home'
 import NewsSection from './components/NewsSection'
 import TvShows from './components/TvShows'
 import NewReleases from './components/NewReleases'
+import Login from './components/Login'
+import SignIn from './components/SingIn'
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +18,8 @@ export const router = createBrowserRouter([
       { path: 'movies', element: <Movies /> },
       { path: 'tv-shows', element: <TvShows /> },
       { path: 'new-releases', element: <NewReleases /> },
+      { path: 'signin', element: <SignIn /> },
+      { path: 'join', element: <Login /> },
     ],
   },
 ])

@@ -4,6 +4,11 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -77,6 +82,7 @@ button {
 
 .brand-group {
   gap: 6px;
+  text-decoration: none;
 }
 
 .brand-badge {

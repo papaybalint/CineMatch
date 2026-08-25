@@ -5,9 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 export default function Navbar() {
   const [search, setSearch] = useState('')
-  const [activeTab, setActiveTab] = useState(navLinks[0])
   const NAV_ITEMS = [
-  { path: '/', label: 'Home' },
   { path: '/movies', label: 'Movies' },
   { path: '/tv-shows', label: 'TV Shows' },
   { path: '/new-releases', label: 'New Releases' }
@@ -16,10 +14,10 @@ export default function Navbar() {
     
     <header className="topbar">
       <div className="nav-left">
-        <div className="brand-group">
+        <NavLink to="/" className="brand-group">
           <div className="brand-badge">CINE</div>
           <div className="brand-text">Match</div>
-        </div>
+        </NavLink>
 
         <nav className="nav-links" aria-label="Main navigation">
       {NAV_ITEMS.map((item) => (
