@@ -1,10 +1,7 @@
 import './App.css'
 import Navbar from './components/Navbar'
-import HeroSection from './components/HeroSection'
-import { TrendingMoviesSection, TopRatedMoviesSection, ComingSoonSection } from './components/MovieSection'
-import NewsSection from './components/NewsSection'
 import Footer from './components/Footer'
-import { trendingMovies, topRatedMovies, upcomingMovies, newsFeed } from './data/movieData'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
@@ -12,11 +9,8 @@ function App() {
       <Navbar />
 
       <main>
-        <HeroSection />
-        <TrendingMoviesSection items={trendingMovies} />
-        <TopRatedMoviesSection items={topRatedMovies} />
-        <ComingSoonSection items={upcomingMovies} />
-        <NewsSection items={newsFeed} />
+        {/* Ide fogja a React Router behelyezni a gyermek oldalakat */}
+        <Outlet />
       </main>
 
       <Footer />

@@ -26,7 +26,7 @@ export const imgTwitter = 'https://www.figma.com/api/mcp/asset/ac75c5e0-5f35-4e8
 export const imgYoutube = 'https://www.figma.com/api/mcp/asset/15a34c36-4550-4a27-9b0f-8d4dc8f73cdf.svg'
 export const imgCircleX = 'https://www.figma.com/api/mcp/asset/b8891917-e43b-4bab-87b5-fc497cd76515.svg'
 
-export const navLinks = ['Movies', 'TV Shows', 'News']
+export const navLinks = ['Home','Movies', 'TV Shows', 'News']
 
 export const trendingMovies = [
   { title: 'Dune: Part Two', year: '2024', genre: 'Sci-Fi', rating: '8.6', image: imgPosterImage },
