@@ -22,6 +22,12 @@ export default function Navbar() {
           <NavLink to="/movies" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
             Movies
           </NavLink>
+          <NavLink to="/tv-shows" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            TV Shows
+          </NavLink>
+          <NavLink to="/new-releases" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
+            New Releases
+          </NavLink>
         </nav>
       </div>
 

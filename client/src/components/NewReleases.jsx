@@ -1,7 +1,7 @@
-export default function TvShows() {
+export default function NewReleases() {
     return (
         <div style={{ padding: '2rem', color: 'white' }}>
-            <h2>TV Shows Oldal</h2>
+            <h2>New Releases Oldal</h2>
         </div>
     )
 }
