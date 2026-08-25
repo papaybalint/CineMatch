@@ -6,6 +6,12 @@ import { NavLink } from 'react-router-dom'
 export default function Navbar() {
   const [search, setSearch] = useState('')
   const [activeTab, setActiveTab] = useState(navLinks[0])
+  const NAV_ITEMS = [
+  { path: '/', label: 'Home' },
+  { path: '/movies', label: 'Movies' },
+  { path: '/tv-shows', label: 'TV Shows' },
+  { path: '/new-releases', label: 'New Releases' }
+]
   return (
     
     <header className="topbar">
@@ -16,19 +22,17 @@ export default function Navbar() {
         </div>
 
         <nav className="nav-links" aria-label="Main navigation">
-          <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            Home
-          </NavLink>
-          <NavLink to="/movies" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            Movies
-          </NavLink>
-          <NavLink to="/tv-shows" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            TV Shows
-          </NavLink>
-          <NavLink to="/new-releases" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>
-            New Releases
-          </NavLink>
-        </nav>
+      {NAV_ITEMS.map((item) => (
+        <NavLink
+          key={item.path}
+          to={item.path}
+          className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+        >
+          {item.label}
+        </NavLink>
+      ))}
+    </nav>
+
       </div>
 
       <div className="search-bar" role="search">
@@ -45,10 +49,10 @@ export default function Navbar() {
       </div>
 
       <div className="nav-right">
-        <span className="sign-in">Sign In</span>
-        <button type="button" className="join-btn">
+        <NavLink to='/signin' className="sign-in">Sign In</NavLink>
+        <NavLink to='/join' className="join-btn">
           Join CineMatch
-        </button>
+        </NavLink>
       </div>
     </header>
   )
