@@ -1,4 +1,4 @@
-import { navLinks, imgSearch } from '../data/movieData'
+import { imgSearch } from '../data/movieData'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
