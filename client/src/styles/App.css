@@ -438,7 +438,24 @@ button {
 }
 
 .trending-grid {
-  grid-template-columns: repeat(6, minmax(180px, 1fr));
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 12px;
+}
+
+.trending-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.trending-grid::-webkit-scrollbar-thumb {
+  background: #18f562;
+  border-radius: 4px;
+}
+
+.trending-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .poster-card,
@@ -451,11 +468,13 @@ button {
 }
 
 .poster-card {
+  flex: 0 0 200px;
   min-height: 360px;
 }
 
 .poster-image-wrap {
   height: 270px;
+  overflow: hidden;
 }
 
 .poster-image {

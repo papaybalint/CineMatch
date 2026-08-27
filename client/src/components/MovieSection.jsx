@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { imgStar, imgEllipse1, imgArrowRight } from '../data/movieData'
 
 function SectionHeader({ title, subtitle, showViewAll = false }) {
@@ -19,17 +20,32 @@ function SectionHeader({ title, subtitle, showViewAll = false }) {
 }
 
 export function TrendingMoviesSection({ items }) {
+  const scrollRef = useRef(null)
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -400 : 400
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+    }
+  }
+
   return (
     <section className="content-section">
-      <SectionHeader
-        title="Trending Now"
-        subtitle="Most anticipated movies and TV shows this week"
-        showViewAll
-      />
+      <div className="section-header">
+        <div>
+          <h2>Trending Now</h2>
+          <p>Most anticipated movies and TV shows this week</p>
+        </div>
 
-      <div className="movie-grid trending-grid">
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button onClick={() => scroll('left')} className="secondary-btn" style={{ padding: '8px 14px', borderRadius: '6px' }}>◀</button>
+          <button onClick={() => scroll('right')} className="secondary-btn" style={{ padding: '8px 14px', borderRadius: '6px' }}>▶</button>
+        </div>
+      </div>
+
+      <div ref={scrollRef} className="movie-grid trending-grid">
         {items.map((movie) => (
-          <article key={movie.title} className="poster-card">
+          <article key={movie.id || movie.title} className="poster-card">
             <div className="poster-image-wrap">
               <img src={movie.image} alt={movie.title} className="poster-image" />
             </div>
@@ -44,8 +60,8 @@ export function TrendingMoviesSection({ items }) {
                 <h3>{movie.title}</h3>
                 <div className="card-meta-row">
                   <span>{movie.year}</span>
-                  <img src={imgEllipse1} alt="" className="tiny-dot" />
-                  <span>{movie.genre}</span>
+                  {movie.genre && <img src={imgEllipse1} alt="" className="tiny-dot" />}
+                  {movie.genre && <span>{movie.genre}</span>}
                 </div>
               </div>
             </div>
