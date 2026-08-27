@@ -13,7 +13,9 @@ exports.getTrendingMovies = async (req, res) => {
 // EZ a sima filmek vezérlője (Controller):
 exports.getMovies = async (req, res) => {
   try {
-    const movies = await tmdbService.fetchMovies()
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 20 // Dinamikus limit!
+    const movies = await tmdbService.fetchMovies(page, limit)
     res.json(movies)
   } catch (error) {
     console.error('Hiba a getMovies-ben:', error)
