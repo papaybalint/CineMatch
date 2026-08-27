@@ -2,19 +2,28 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Login.css';
 
-export default function SignIn() {
+export default function Register() {
+  const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    console.log('Login with:', { email, password, rememberMe });
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    setError('');
+    console.log('Register with:', { fullName, email, password, termsAccepted });
   };
 
-  const handleGoogleLogin = () => {
-    console.log('Google login');
+  const handleGoogleRegister = () => {
+    console.log('Google register');
   };
 
   return (
@@ -25,10 +34,10 @@ export default function SignIn() {
           <div className="match-badge">
             <span className="match-label">Match</span>
           </div>
-          
+
           <div className="tagline">
             <h1>
-              Your world of <span className="cinema-text">cinema,</span> curated.
+              Start your <span className="cinema-text">cinema</span> journey today.
             </h1>
             <p className="description">
               Search, rate and get personalised recommendations, based on your mood.
@@ -57,26 +66,44 @@ export default function SignIn() {
         </div>
       </div>
 
-      {/* Right Side - Login Form */}
+      {/* Right Side - Register Form */}
       <div className="login-right">
         <div className="login-form-container">
-          <h2 className="welcome-title">Welcome back</h2>
+          <h2 className="welcome-title">Create an account</h2>
 
-          {/* Google Login */}
-          <button className="google-login-btn" onClick={handleGoogleLogin}>
+          {/* Google Register */}
+          <button className="google-login-btn" onClick={handleGoogleRegister}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
               <path d="M12 6v12M6 12h12" stroke="currentColor" strokeWidth="2"/>
             </svg>
-            Continue with Google
+            Sign up with Google
           </button>
 
           <div className="divider">
             <span>or</span>
           </div>
 
-          {/* Login Form */}
-          <form onSubmit={handleLogin}>
+          {/* Registration Form */}
+          <form onSubmit={handleRegister}>
+            {error && (
+              <div style={{ color: '#ff4d4d', marginBottom: '1rem', textAlign: 'center', fontSize: '0.95rem' }}>
+                {error}
+              </div>
+            )}
+
+            <div className="form-group">
+              <label htmlFor="fullName">Full Name</label>
+              <input
+                id="fullName"
+                type="text"
+                placeholder="Enter your full name"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+              />
+            </div>
+
             <div className="form-group">
               <label htmlFor="email">Email address</label>
               <input
@@ -90,15 +117,12 @@ export default function SignIn() {
             </div>
 
             <div className="form-group">
-              <div className="password-header">
-                <label htmlFor="password">Password</label>
-                <a href="#" className="forgot-password">Forgot password?</a>
-              </div>
+              <label htmlFor="password">Password</label>
               <div className="password-input-wrapper">
                 <input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -113,23 +137,45 @@ export default function SignIn() {
               </div>
             </div>
 
+            <div className="form-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <div className="password-input-wrapper">
+                <input
+                  id="confirmPassword"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
+                </button>
+              </div>
+            </div>
+
             <div className="checkbox-group">
               <input
-                id="remember"
+                id="terms"
                 type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                required
               />
-              <label htmlFor="remember">Remember me for 30 days</label>
+              <label htmlFor="terms">I agree to the Terms of Service & Privacy Policy</label>
             </div>
 
             <button type="submit" className="sign-in-btn">
-              Sign In
+              Create Account
             </button>
           </form>
 
           <p className="signup-text">
-            Don't have an account? <Link to="/join" className="signup-link">Create a new account</Link>
+            Already have an account? <Link to="/signin" className="signup-link">Sign In</Link>
           </p>
         </div>
       </div>
