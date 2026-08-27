@@ -8,6 +8,7 @@ import TvShows from './components/TvShows'
 import NewReleases from './components/NewReleases'
 import Register from './components/Register'
 import SignIn from './components/SingIn'
+import NotFound from './components/NotFound'
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
       { path: 'signin', element: <SignIn /> },
       { path: 'join', element: <Register /> },
       { path: 'register', element: <Register /> },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ])
