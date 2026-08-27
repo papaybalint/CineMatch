@@ -5,7 +5,7 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - ./server/.env
+      - ./server/config/.env
     volumes:
       - ./server:/app             # Élőben összeköti a te server/ mappádat a konténer /app mappájával!
       - /app/node_modules         # Megvédi a konténeren belüli node_modules-t
