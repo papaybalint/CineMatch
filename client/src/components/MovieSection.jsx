@@ -73,16 +73,32 @@ export function TrendingMoviesSection({ items }) {
 }
 
 export function TopRatedMoviesSection({ items }) {
+  const scrollRef = useRef(null)
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -400 : 400
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+    }
+  }
+
   return (
     <section className="content-section low-contrast">
-      <div className="section-header stacked-header">
-        <h2>Top Rated Movies</h2>
-        <p>All-time cinematic masterpieces according to user votes</p>
+      <div className="section-header">
+        <div>
+          <h2>Top Rated Movies</h2>
+          <p>All-time cinematic masterpieces according to user votes</p>
+        </div>
+
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button onClick={() => scroll('left')} className="secondary-btn" style={{ padding: '8px 14px', borderRadius: '6px' }}>◀</button>
+          <button onClick={() => scroll('right')} className="secondary-btn" style={{ padding: '8px 14px', borderRadius: '6px' }}>▶</button>
+        </div>
       </div>
 
-      <div className="top-rated-grid">
+      <div ref={scrollRef} className="top-rated-grid">
         {items.map((movie) => (
-          <div key={movie.rank} className="ranked-card">
+          <div key={movie.id || movie.rank} className="ranked-card">
             <span className="rank-number">{movie.rank}</span>
 
             <div className="ranked-poster">

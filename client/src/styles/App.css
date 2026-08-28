@@ -542,13 +542,29 @@ button {
   font-size: 12px;
 }
 
-.tiny-dot {
-  width: 3px;
-  height: 3px;
+.top-rated-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 12px;
 }
 
-.top-rated-grid {
-  grid-template-columns: repeat(4, minmax(240px, 1fr));
+.top-rated-grid .ranked-card {
+  flex: 0 0 280px;
+}
+
+.top-rated-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.top-rated-grid::-webkit-scrollbar-thumb {
+  background: #18f562;
+  border-radius: 4px;
+}
+
+.top-rated-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .ranked-card {
@@ -559,14 +575,15 @@ button {
 }
 
 .rank-number {
-  width: 50px;
+  min-width: 55px;
   text-align: center;
   color: #18f562;
   font-family: 'Outfit', sans-serif;
-  font-size: 64px;
-  font-weight: 900;
-  opacity: 0.8;
+  font-size: 38px;
+  font-weight: 800;
+  opacity: 0.9;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .ranked-poster {

@@ -7,6 +7,7 @@ import { topRatedMovies, upcomingMovies, newsFeed } from '../data/movieData'
 export default function Home() {
   const [trending, setTrending] = useState([])
   const [loading, setLoading] = useState(true)
+  const [topRated, setTopRated] = useState([])
 
   useEffect(() => {
     // Lekérés a saját Dockerized backend szerverünktől!
@@ -22,6 +23,17 @@ export default function Home() {
         console.error('Hiba az API lekérésekor:', err)
         setLoading(false)
       })
+    //top rated lekeres
+    fetch('http://localhost:3000/api/movies/toprated')
+      .then((res) => res.json())
+      .then((data) => {
+        setTopRated(data.results || data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error('Hiba a Top Rated API lekérésekor:', err)
+        setLoading(false)
+      })
   }, [])
 
   return (
@@ -35,7 +47,7 @@ export default function Home() {
         <TrendingMoviesSection items={trending} />
       )}
 
-      <TopRatedMoviesSection items={topRatedMovies} />
+      <TopRatedMoviesSection items={topRated} />
       <ComingSoonSection items={upcomingMovies} />
       <NewsSection items={newsFeed} />
     </>
