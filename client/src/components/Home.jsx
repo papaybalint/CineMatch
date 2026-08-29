@@ -9,6 +9,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [topRated, setTopRated] = useState([])
 
+
   useEffect(() => {
     // Lekérés a saját Dockerized backend szerverünktől!
     fetch('http://localhost:3000/api/movies/trending')
@@ -28,6 +29,17 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         setTopRated(data.results || data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error('Hiba a Top Rated API lekérésekor:', err)
+        setLoading(false)
+      })
+    //tv shows lekerese
+    fetch('http://localhost:3000/api/movies/tv-show')
+      .then((res) => res.json())
+      .then((data) => {
+        setTvShows(data.results || data)
         setLoading(false)
       })
       .catch((err) => {

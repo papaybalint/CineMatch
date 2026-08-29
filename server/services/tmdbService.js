@@ -43,6 +43,31 @@ exports.fetchMovies = async (page = 1, limit = 20) => {
   }))
 }
 
+exports.fetchTvShows = async (page = 1, limit = 20) => {
+  const apiKey = process.env.TMDB_API_KEY
+  
+  // Szükséges TMDB oldalak lekérése
+  const [res1, res2] = await Promise.all([
+    fetch(`https://api.themoviedb.org/3/discover/tv?sort_by=popularity.desc&api_key=${apiKey}&page=${page}`).then(r => r.json()),
+    fetch(`https://api.themoviedb.org/3/discover/tv?sort_by=popularity.desc&api_key=${apiKey}&page=${page + 1}`).then(r => r.json())
+  ])
+
+  const combined = [...(res1.results || []), ...(res2.results || [])]
+
+  // Kivágjuk a Frontend által kért pontos darabszámot (limit):
+  return combined.slice(0, limit).map((movie) => ({
+    id: movie.id,
+    title: movie.title || movie.name,
+    rating: movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A',
+    year: (movie.first_air_date || movie.release_date || '').split('-')[0] || 'N/A',
+    image: movie.poster_path 
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+      : 'https://via.placeholder.com/500x750'
+  }))
+}
+
+
+
 exports.topRatedMovies = async () => {
   const apiKey = process.env.TMDB_API_KEY
   if (!apiKey) {
