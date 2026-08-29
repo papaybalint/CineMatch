@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import HeroSection from './HeroSection'
 import { TrendingMoviesSection, TopRatedMoviesSection, ComingSoonSection } from './MovieSection'
 import NewsSection from './NewsSection'
-import { topRatedMovies, upcomingMovies, newsFeed } from '../data/movieData'
+import { upcomingMovies, newsFeed } from '../data/movieData'
 
 export default function Home() {
   const [trending, setTrending] = useState([])
