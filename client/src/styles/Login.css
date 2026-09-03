@@ -14,7 +14,8 @@
 /* Left Side - Cinema Theme */
 .login-left {
   flex: 1;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a1a1a 100%);
+  background: linear-gradient(135deg, rgba(10, 15, 12, 0.35) 0%, rgba(10, 15, 12, 0.60) 100%),
+              url('/cinematch_backdrop.png') center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,11 +92,7 @@
 
 /* Neon Decorative Circles */
 .neon-circle {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid #c41e3a;
-  opacity: 0.3;
-  filter: blur(1px);
+  display: none;
 }
 
 .neon-1 {

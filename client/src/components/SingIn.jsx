@@ -22,8 +22,9 @@ export default function SignIn() {
       {/* Left Side - Cinema Theme */}
       <div className="login-left">
         <div className="cinema-content">
-          <div className="match-badge">
-            <span className="match-label">Match</span>
+          <div className="brand-group" style={{ marginBottom: '2.5rem', display: 'inline-flex' }}>
+            <div className="brand-badge">CINE</div>
+            <div className="brand-text" style={{ color: '#ffffff', fontSize: '22px', fontWeight: '700' }}>Match</div>
           </div>
           
           <div className="tagline">
