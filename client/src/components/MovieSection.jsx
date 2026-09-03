@@ -122,22 +122,38 @@ export function TopRatedMoviesSection({ items }) {
 }
 
 export function ComingSoonSection({ items }) {
+  const scrollRef = useRef(null)
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -400 : 400
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+    }
+  }
+
   return (
     <section className="content-section low-contrast">
-      <div className="section-header stacked-header">
-        <h2>Coming Soon</h2>
-        <p>Mark your calendars for these highly anticipated titles</p>
+      <div className="section-header">
+        <div>
+          <h2>Coming Soon</h2>
+          <p>Mark your calendars for these highly anticipated titles</p>
+        </div>
+
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button onClick={() => scroll('left')} className="secondary-btn" style={{ padding: '8px 14px', borderRadius: '6px' }}>◀</button>
+          <button onClick={() => scroll('right')} className="secondary-btn" style={{ padding: '8px 14px', borderRadius: '6px' }}>▶</button>
+        </div>
       </div>
 
-      <div className="coming-soon-grid">
+      <div ref={scrollRef} className="coming-soon-grid">
         {items.map((movie) => (
-          <article key={movie.title} className="coming-soon-card">
+          <article key={movie.id || movie.title} className="coming-soon-card">
             <div className="coming-soon-image">
               <img src={movie.image} alt={movie.title} className="poster-image" />
             </div>
 
             <div className="coming-soon-body">
-              <span className="date-badge">{movie.date}</span>
+              <span className="date-badge">{movie.year || movie.date}</span>
 
               <div className="future-copy">
                 <h3>{movie.title}</h3>

@@ -607,7 +607,28 @@ button {
 }
 
 .coming-soon-grid {
-  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 12px;
+}
+
+.coming-soon-grid .coming-soon-card {
+  flex: 0 0 240px;
+}
+
+.coming-soon-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.coming-soon-grid::-webkit-scrollbar-thumb {
+  background: #18f562;
+  border-radius: 4px;
+}
+
+.coming-soon-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .coming-soon-card {

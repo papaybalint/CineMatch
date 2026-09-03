@@ -8,6 +8,7 @@ export default function Home() {
   const [trending, setTrending] = useState([])
   const [loading, setLoading] = useState(true)
   const [topRated, setTopRated] = useState([])
+  const [upcomingMovies, setUpcomingMovies] = useState([])
 
 
   useEffect(() => {
@@ -47,6 +48,17 @@ export default function Home() {
         setLoading(false)
       })
   }, [])
+
+  fetch('http://localhost:3000/api/movies/upcoming')
+      .then((res) => res.json())
+      .then((data) => {
+        setUpcomingMovies(data.results || data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error('Hiba a Top Rated API lekérésekor:', err)
+        setLoading(false)
+      })
 
   return (
     <>

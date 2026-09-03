@@ -32,3 +32,13 @@ exports.getTopRatedMovies = async (req, res) => {
     res.status(500).json({ message: 'Szerver hiba a filmek lekérésekor' })
   }
 }
+
+exports.getUpcomingMovies = async (req, res) => {
+  try {
+    const upcomingMovies = await tmdbService.fetchUpcoming()
+    res.json(upcomingMovies)
+  } catch (error) {
+    console.error('Hiba a getUpcomingMovies-ben:', error)
+    res.status(500).json({ message: 'Szerver hiba a filmek lekérésekor' })
+  }
+}
