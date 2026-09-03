@@ -94,10 +94,12 @@ exports.fetchUpcoming = async () => {
   const response = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`)
   const data = await response.json()
 
-  return (data.results || []).map((movie,index) => ({
+  return (data.results || []).map((movie, index) => ({
     id: movie.id,
     rank: `Soon - #${index + 1}`,
     title: movie.title || movie.name,
+    date: movie.release_date || 'Coming Soon',
+    style: movie.overview ? (movie.overview.substring(0, 60) + '...') : 'Hamarosan a mozikban!',
     year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
     image: movie.poster_path 
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 

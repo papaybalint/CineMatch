@@ -10,55 +10,34 @@ export default function Home() {
   const [topRated, setTopRated] = useState([])
   const [upcomingMovies, setUpcomingMovies] = useState([])
 
-
   useEffect(() => {
-    // Lekérés a saját Dockerized backend szerverünktől!
+    // 1. Trending lekérés
     fetch('http://localhost:3000/api/movies/trending')
       .then((res) => res.json())
-      .then((data) => {
-        // Ha a valódi TMDB API válaszol, az adatok a data.results-ban vannak.
-        // Ha a teszt válaszunk, akkor maga a data a tömb.
-        setTrending(data.results || data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.error('Hiba az API lekérésekor:', err)
-        setLoading(false)
-      })
-    //top rated lekeres
+      .then((data) => setTrending(data.results || data))
+      .catch((err) => console.error(err))
+
+    // 2. Top Rated lekérés
     fetch('http://localhost:3000/api/movies/toprated')
       .then((res) => res.json())
-      .then((data) => {
-        setTopRated(data.results || data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.error('Hiba a Top Rated API lekérésekor:', err)
-        setLoading(false)
-      })
-    //tv shows lekerese
-    fetch('http://localhost:3000/api/movies/tv-show')
-      .then((res) => res.json())
-      .then((data) => {
-        setTvShows(data.results || data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.error('Hiba a Top Rated API lekérésekor:', err)
-        setLoading(false)
-      })
-  }, [])
+      .then((data) => setTopRated(data.results || data))
+      .catch((err) => console.error(err))
 
-  fetch('http://localhost:3000/api/movies/upcoming')
+    // 3. Upcoming lekérés (a useEffect BELSEJÉBEN!):
+    fetch('http://localhost:3000/api/movies/upcoming')
       .then((res) => res.json())
       .then((data) => {
         setUpcomingMovies(data.results || data)
         setLoading(false)
       })
       .catch((err) => {
-        console.error('Hiba a Top Rated API lekérésekor:', err)
+        console.error('Hiba az Upcoming API lekérésekor:', err)
         setLoading(false)
       })
+  }, []) // <-- Az üres függőségi tömb szigorúan a useEffect LEGVÉGÉN van!
+
+
+
 
   return (
     <>

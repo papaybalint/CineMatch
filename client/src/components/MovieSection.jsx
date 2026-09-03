@@ -157,7 +157,6 @@ export function ComingSoonSection({ items }) {
 
               <div className="future-copy">
                 <h3>{movie.title}</h3>
-                <p>{movie.style}</p>
               </div>
             </div>
           </article>
