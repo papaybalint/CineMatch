@@ -99,23 +99,26 @@ export function TopRatedMoviesSection({ items }) {
 
       <div ref={scrollRef} className="top-rated-grid">
         {items.map((movie) => (
-          <div key={movie.id || movie.rank} className="ranked-card">
-            <span className="rank-number">{movie.rank}</span>
+          <article key={movie.id || movie.rank} className="poster-card">
+            <div className="poster-image-wrap">
+              <span className="rank-badge">{movie.rank}</span>
+              <img src={movie.image} alt={movie.title} className="poster-image" />
+            </div>
 
-            <div className="ranked-poster">
-              <div className="poster-image-wrap small">
-                <img src={movie.image} alt={movie.title} className="poster-image" />
+            <div className="card-body">
+              <div className="card-rating">
+                <img src={imgStar} alt="" className="star-icon" />
+                <span>{movie.rating}</span>
               </div>
 
-              <div className="ranked-info">
+              <div className="card-meta-block">
                 <h3>{movie.title}</h3>
-                <div className="card-rating">
-                  <img src={imgStar} alt="" className="star-icon" />
-                  <span>{movie.rating}</span>
+                <div className="card-meta-row">
+                  <span>{movie.year}</span>
                 </div>
               </div>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </section>

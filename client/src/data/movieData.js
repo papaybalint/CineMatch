@@ -15,7 +15,7 @@ export const imgThumbnail = 'https://www.figma.com/api/mcp/asset/e6976771-f9ce-4
 export const imgThumbnail1 = 'https://www.figma.com/api/mcp/asset/74c9b733-feaa-4224-94a9-c3d451e0ee7d.png'
 export const imgThumbnail2 = 'https://www.figma.com/api/mcp/asset/04354def-8e83-44cc-810e-142cdbda2742.png'
 export const imgSearch = 'https://www.figma.com/api/mcp/asset/a82cfff9-7d85-48e0-9db7-2a2e0d0ee5a2.svg'
-export const imgStar = 'https://www.figma.com/api/mcp/asset/c5e09c9f-f875-47de-9f4e-70db1177ea02.svg'
+export const imgStar = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23f5c518%22%3E%3Cpath%20d%3D%22M12%2017.27L18.18%2021l-1.64-7.03L22%209.24l-7.19-.61L12%202%209.19%208.63%202%209.24l5.46%204.73L5.82%2021z%22%2F%3E%3C%2Fsvg%3E'
 export const imgEllipse = 'https://www.figma.com/api/mcp/asset/59737574-6145-44be-9e7c-7dda60bb41bb.svg'
 export const imgPlay = 'https://www.figma.com/api/mcp/asset/37afbd64-55af-4346-a785-2d9fa08c3a5f.svg'
 export const imgInfo = 'https://www.figma.com/api/mcp/asset/f752d25f-38c9-4856-ae2a-d772fcb834db.svg'
