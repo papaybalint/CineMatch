@@ -10,6 +10,7 @@ export default function Home() {
   const [topRated, setTopRated] = useState([])
   const [upcomingMovies, setUpcomingMovies] = useState([])
 
+
   useEffect(() => {
     // 1. Trending lekérés
     fetch('http://localhost:3000/api/movies/trending')
@@ -18,7 +19,7 @@ export default function Home() {
       .catch((err) => console.error(err))
 
     // 2. Top Rated lekérés
-    fetch('http://localhost:3000/api/movies/toprated')
+    fetch('http://localhost:3000/api/movies/top-rated')
       .then((res) => res.json())
       .then((data) => setTopRated(data.results || data))
       .catch((err) => console.error(err))

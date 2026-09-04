@@ -16,7 +16,11 @@ export default function Movies() {
         if (page === 1) {
           setMovies(data)
         } else {
-          setMovies((prevMovies) => [...prevMovies, ...data])
+          setMovies((prevMovies) => {
+            const existingIds = new Set(prevMovies.map((m) => m.id))
+            const newUniqueMovies = data.filter((m) => !existingIds.has(m.id))
+            return [...prevMovies, ...newUniqueMovies]
+          })
         }
         setLoading(false)
       })
@@ -26,7 +30,7 @@ export default function Movies() {
       })
   }, [page])
 
-  
+
   return (
     <section className="content-section">
       <h2>Explore Movies</h2>

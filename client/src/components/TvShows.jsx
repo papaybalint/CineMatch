@@ -11,13 +11,17 @@ export default function TvShows() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/tv-shows?page=${page}&limit=22`)
+    fetch(`http://localhost:3000/api/tv-shows?page=${page}&limit=18`)
       .then((res) => res.json())
       .then((data) => {
         if (page === 1) {
           setTvShows(data)
         } else {
-          setTvShows((prevTvShows) => [...prevTvShows, ...data])
+          setTvShows((prevTvShows) => {
+            const existingIds = new Set(prevTvShows.map((t) => t.id))
+            const newUniqueShows = data.filter((t) => !existingIds.has(t.id))
+            return [...prevTvShows, ...newUniqueShows]
+          })
         }
         setLoading(false)
       })

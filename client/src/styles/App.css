@@ -483,11 +483,14 @@ button {
 }
 
 .poster-card {
-  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .poster-image-wrap {
-  height: 270px;
+  width: 100%;
+  aspect-ratio: 2 / 3;
   overflow: hidden;
 }
 
@@ -495,6 +498,7 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
 }
 
 .card-body {

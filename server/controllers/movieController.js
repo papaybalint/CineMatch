@@ -25,20 +25,32 @@ exports.getMovies = async (req, res) => {
 
 exports.getTopRatedMovies = async (req, res) => {
   try {
-    const topRatedMovies = await tmdbService.topRatedMovies()
+    const topRatedMovies = await tmdbService.fetchTopRatedMovies()
     res.json(topRatedMovies)
   } catch (error) {
     console.error('Hiba a Top Rated movies-ben:', error)
     res.status(500).json({ message: 'Szerver hiba a filmek lekérésekor' })
   }
 }
-
+// Fooldalon
 exports.getUpcomingMovies = async (req, res) => {
   try {
-    const upcomingMovies = await tmdbService.fetchUpcoming()
+    const upcomingMovies = await tmdbService.fetchUpcomingMovies()
     res.json(upcomingMovies)
   } catch (error) {
     console.error('Hiba a getUpcomingMovies-ben:', error)
+    res.status(500).json({ message: 'Szerver hiba a filmek lekérésekor' })
+  }
+}
+// Kulon oldal
+exports.getNewReleaseMovies = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 20 // Dinamikus limit!
+    const movies = await tmdbService.fetchNewReleaseMovies(page, limit)
+    res.json(movies)
+  } catch (error) {
+    console.error('Hiba a getNewReleases-ben:', error)
     res.status(500).json({ message: 'Szerver hiba a filmek lekérésekor' })
   }
 }
