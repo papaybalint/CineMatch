@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-export default function Movies() {
+
+export default function ComingSoon() {
   const [movies, setMovies] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -10,7 +11,7 @@ export default function Movies() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/movies?page=${page}&limit=18`)
+    fetch(`http://localhost:3000/api/movies/coming-soon?page=${page}&limit=18`)
       .then((res) => res.json())
       .then((data) => {
         if (page === 1) {
@@ -30,13 +31,12 @@ export default function Movies() {
       })
   }, [page])
 
-
   return (
     <section className="content-section">
-      <h2>Explore Movies</h2>
+      <h2>Coming Soon</h2>
 
-      {loading && <div style={{ color: 'white' }}>Filmek töltése...</div>}
-      {error && <div style={{ color: 'red' }}>Hiba történt a töltéskor.</div>}
+      {loading && <div style={{ color: 'white' }}>Hamarosan érkező filmek töltése...</div>}
+      {error && <div style={{ color: 'red' }}>Hiba történt a filmek töltésekor.</div>}
 
       {!loading && !error && (
         <div className="movie-grid">
@@ -47,13 +47,10 @@ export default function Movies() {
               </div>
 
               <div className="card-body">
-                <div className="card-rating">
-                  <span>⭐ {movie.rating}</span>
-                </div>
                 <div className="card-meta-block">
                   <h3>{movie.title}</h3>
                   <div className="card-meta-row">
-                    <span>{movie.year}</span>
+                    <span>📅 {movie.date || movie.year}</span>
                   </div>
                 </div>
               </div>
@@ -68,5 +65,4 @@ export default function Movies() {
       </div>
     </section>
   )
-
 }

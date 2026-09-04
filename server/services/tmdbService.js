@@ -1,3 +1,5 @@
+const NO_POSTER_IMAGE = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22750%22%20viewBox%3D%220%200%20500%20750%22%3E%3Crect%20fill%3D%22%231a1b23%22%20width%3D%22500%22%20height%3D%22750%22%2F%3E%3Ctext%20fill%3D%22%239ca3af%22%20font-family%3D%22sans-serif%22%20font-size%3D%2228%22%20font-weight%3D%22bold%22%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%3ENo%20Poster%3C%2Ftext%3E%3C%2Fsvg%3E'
+
 exports.fetchTrendingMovies = async () => {
   const apiKey = process.env.TMDB_API_KEY
   if (!apiKey) {
@@ -14,7 +16,7 @@ exports.fetchTrendingMovies = async () => {
     year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
     image: movie.poster_path 
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-      : 'https://via.placeholder.com/500x750'
+      : NO_POSTER_IMAGE
   }))
 }
 
@@ -34,7 +36,7 @@ exports.fetchMovies = async (page = 1, limit = 20) => {
     year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
     image: movie.poster_path 
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-      : 'https://via.placeholder.com/500x750'
+      : NO_POSTER_IMAGE
   }))
 }
 
@@ -54,7 +56,7 @@ exports.fetchTvShows = async (page = 1, limit = 20) => {
     year: (movie.first_air_date || movie.release_date || '').split('-')[0] || 'N/A',
     image: movie.poster_path 
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-      : 'https://via.placeholder.com/500x750'
+      : NO_POSTER_IMAGE
   }))
 }
 
@@ -73,7 +75,7 @@ exports.fetchTopRatedMovies = async () => {
     year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
     image: movie.poster_path 
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-      : 'https://via.placeholder.com/500x750'
+      : NO_POSTER_IMAGE
   }))
 }
 
@@ -83,10 +85,28 @@ exports.fetchUpcomingMovies = async () => {
     throw new Error('TMDB API kulcs nem található az környezeti változókban!')
   }
 
-  const response = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}`)
-  const data = await response.json()
+  const today = new Date().toISOString().split('T')[0]
+  
+  const pagesData = await Promise.all([
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=1`).then(r => r.json()),
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=2`).then(r => r.json()),
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=3`).then(r => r.json()),
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=4`).then(r => r.json()),
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=5`).then(r => r.json()),
+    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=6`).then(r => r.json())
+  ])
 
-  return (data.results || []).map((movie, index) => ({
+  const combined = pagesData.flatMap(p => p.results || [])
+  const futureMovies = combined.filter((movie) => movie.release_date && movie.release_date > today)
+
+  const uniqueMap = new Map()
+  futureMovies.forEach((movie) => {
+    if (!uniqueMap.has(movie.id)) {
+      uniqueMap.set(movie.id, movie)
+    }
+  })
+
+  return Array.from(uniqueMap.values()).slice(0, 20).map((movie, index) => ({
     id: movie.id,
     rank: `Soon - #${index + 1}`,
     title: movie.title || movie.name,
@@ -95,22 +115,29 @@ exports.fetchUpcomingMovies = async () => {
     year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
     image: movie.poster_path 
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-      : 'https://via.placeholder.com/500x750'
+      : NO_POSTER_IMAGE
   }))
 }
 
-exports.fetchNewReleaseMovies = async (page = 1, limit = 20) => {
+exports.fetchComingSoonMovies = async (page = 1, limit = 18) => {
   const apiKey = process.env.TMDB_API_KEY
-  
-  const [res1, res2] = await Promise.all([
-    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=${page}`).then(r => r.json()),
-    fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=${page + 1}`).then(r => r.json())
-  ])
+  if (!apiKey) {
+    throw new Error('TMDB API kulcs nem található az környezeti változókban!')
+  }
 
-  const combined = [...(res1.results || []), ...(res2.results || [])]
+  const today = new Date().toISOString().split('T')[0]
+  const startTmdbPage = (page - 1) * 5 + 1
+  const tmdbPages = [startTmdbPage, startTmdbPage + 1, startTmdbPage + 2, startTmdbPage + 3, startTmdbPage + 4]
+
+  const pagesData = await Promise.all(
+    tmdbPages.map((p) => fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&page=${p}`).then((r) => r.json()))
+  )
+
+  const combined = pagesData.flatMap((p) => p.results || [])
+  const futureMovies = combined.filter((movie) => movie.release_date && movie.release_date > today)
+
   const uniqueMap = new Map()
-
-  combined.forEach((movie) => {
+  futureMovies.forEach((movie) => {
     if (!uniqueMap.has(movie.id)) {
       uniqueMap.set(movie.id, movie)
     }
@@ -119,10 +146,34 @@ exports.fetchNewReleaseMovies = async (page = 1, limit = 20) => {
   return Array.from(uniqueMap.values()).slice(0, limit).map((movie) => ({
     id: movie.id,
     title: movie.title || movie.name,
-    rating: movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A',
-    year: (movie.first_air_date || movie.release_date || '').split('-')[0] || 'N/A',
+    date: movie.release_date,
+    year: (movie.release_date || '').split('-')[0] || 'N/A',
     image: movie.poster_path 
       ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
-      : 'https://via.placeholder.com/500x750'
+      : NO_POSTER_IMAGE
   }))
 }
+
+exports.trendingNow = async (page = 1, limit = 20) => {
+  const apiKey = process.env.TMDB_API_KEY
+  // Movies kulonallo oldal
+  const [res1, res2] = await Promise.all([
+    fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}&page=${page}`).then(r => r.json()),
+    fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}&page=${page + 1}`).then(r => r.json())
+  ])
+  const combined = [...(res1.results || []), ...(res2.results || [])]
+  // Kivágjuk a Frontend által kért pontos darabszámot (limit):
+  return combined.slice(0, limit).map((movie) => ({
+    id: movie.id,
+    title: movie.title || movie.name,
+    rating: movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A',
+    year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
+    image: movie.poster_path 
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+      : NO_POSTER_IMAGE
+  }))
+}
+
+
+exports.fetchNewReleaseMovies = exports.fetchComingSoonMovies
+

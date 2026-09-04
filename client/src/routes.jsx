@@ -5,7 +5,7 @@ import Movies from './components/Movies'          // A filmek oldal
 import Home from './components/Home'
 import NewsSection from './components/NewsSection'
 import TvShows from './components/TvShows'
-import NewReleases from './components/NewReleases'
+import ComingSoon from './components/ComingSoon'
 import Register from './components/Register'
 import SignIn from './components/SingIn'
 import NotFound from './components/NotFound'
@@ -18,7 +18,8 @@ export const router = createBrowserRouter([
       { index: true, element: <Home /> }, // Kezdőlap ( / )
       { path: 'movies', element: <Movies /> },
       { path: 'tv-shows', element: <TvShows /> },
-      { path: 'new-releases', element: <NewReleases /> },
+      { path: 'coming-soon', element: <ComingSoon /> },
+      { path: 'new-releases', element: <ComingSoon /> },
       { path: 'signin', element: <SignIn /> },
       { path: 'join', element: <Register /> },
       { path: 'register', element: <Register /> },

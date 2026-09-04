@@ -43,14 +43,15 @@ exports.getUpcomingMovies = async (req, res) => {
   }
 }
 // Kulon oldal
-exports.getNewReleaseMovies = async (req, res) => {
+exports.getComingSoonMovies = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1
-    const limit = parseInt(req.query.limit) || 20 // Dinamikus limit!
-    const movies = await tmdbService.fetchNewReleaseMovies(page, limit)
+    const limit = parseInt(req.query.limit) || 18 // Dinamikus limit!
+    const movies = await tmdbService.fetchComingSoonMovies(page, limit)
     res.json(movies)
   } catch (error) {
-    console.error('Hiba a getNewReleases-ben:', error)
+    console.error('Hiba a getComingSoonMovies-ben:', error)
     res.status(500).json({ message: 'Szerver hiba a filmek lekérésekor' })
   }
 }
+exports.getNewReleaseMovies = exports.getComingSoonMovies

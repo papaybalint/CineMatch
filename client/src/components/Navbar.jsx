@@ -9,7 +9,7 @@ export default function Navbar() {
     { path: '/', label: 'Home' },
     { path: '/movies', label: 'Movies' },
     { path: '/tv-shows', label: 'TV Shows' },
-    { path: '/new-releases', label: 'New Releases' }
+    { path: '/coming-soon', label: 'Coming Soon' }
   ]
   return (
     <header className="topbar">

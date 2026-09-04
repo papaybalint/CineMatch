@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { imgStar, imgEllipse1, imgArrowRight } from '../data/movieData'
 
 function SectionHeader({ title, subtitle, showViewAll = false }) {
@@ -153,7 +154,7 @@ export function ComingSoonSection({ items }) {
             </div>
 
             <div className="coming-soon-body">
-              <span className="date-badge">{movie.year || movie.date}</span>
+              <span className="date-badge">📅 {movie.date || movie.year}</span>
 
               <div className="future-copy">
                 <h3>{movie.title}</h3>
@@ -161,6 +162,12 @@ export function ComingSoonSection({ items }) {
             </div>
           </article>
         ))}
+      </div>
+
+      <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+        <Link to="/coming-soon" className="primary-btn" style={{ padding: '12px 28px', textDecoration: 'none', display: 'inline-block' }}>
+          Összes hamarosan érkező film megtekintése →
+        </Link>
       </div>
     </section>
   )
