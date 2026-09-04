@@ -6,16 +6,22 @@ exports.fetchTrendingMovies = async () => {
     throw new Error('TMDB API kulcs nem található az környezeti változókban!')
   }
 
-  const response = await fetch(`https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}`)
+  const response = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${apiKey}`)
   const data = await response.json()
 
-  return (data.results || []).map((movie) => ({
-    id: movie.id,
-    title: movie.title || movie.name,
-    rating: movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A',
-    year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
-    image: movie.poster_path 
-      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+  return (data.results || []).map((item) => ({
+    id: item.id,
+    title: item.title || item.name,
+    media_type: item.media_type || (item.title ? 'movie' : 'tv'),
+    rating: item.vote_average ? item.vote_average.toFixed(1) : 'N/A',
+    vote_count: item.vote_count ? (item.vote_count >= 1000 ? `${(item.vote_count / 1000).toFixed(0)}K` : item.vote_count) : null,
+    year: (item.release_date || item.first_air_date || '').split('-')[0] || 'N/A',
+    overview: item.overview || '',
+    backdrop: item.backdrop_path 
+      ? `https://image.tmdb.org/t/p/original${item.backdrop_path}` 
+      : (item.poster_path ? `https://image.tmdb.org/t/p/original${item.poster_path}` : null),
+    image: item.poster_path 
+      ? `https://image.tmdb.org/t/p/w500${item.poster_path}` 
       : NO_POSTER_IMAGE
   }))
 }

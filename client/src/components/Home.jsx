@@ -42,18 +42,17 @@ export default function Home() {
 
   return (
     <>
-      <HeroSection />
+      <HeroSection items={trending} />
       
-      {/* Ha még tölt, kiírjuk, különben átadjuk az API-ból jött filmeket */}
       {loading ? (
-        <div style={{ color: 'white', padding: '2rem' }}>Filmek töltése...</div>
+        <div style={{ color: 'white', padding: '2rem', textAlign: 'center' }}>Tartalom töltése...</div>
       ) : (
-        <TrendingMoviesSection items={trending} />
+        <>
+          <TopRatedMoviesSection items={topRated} />
+          <ComingSoonSection items={upcomingMovies} />
+          <NewsSection items={newsFeed} />
+        </>
       )}
-
-      <TopRatedMoviesSection items={topRated} />
-      <ComingSoonSection items={upcomingMovies} />
-      <NewsSection items={newsFeed} />
     </>
   )
 }
