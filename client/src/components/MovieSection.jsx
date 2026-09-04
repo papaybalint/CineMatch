@@ -2,23 +2,9 @@ import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { imgStar, imgEllipse1, imgArrowRight } from '../data/movieData'
 
-function SectionHeader({ title, subtitle, showViewAll = false }) {
-  return (
-    <div className="section-header">
-      <div>
-        <h2>{title}</h2>
-        {subtitle && <p>{subtitle}</p>}
-      </div>
 
-      {showViewAll && (
-        <div className="view-all">
-          <span>View All</span>
-          <img src={imgArrowRight} alt="" className="arrow-right" />
-        </div>
-      )}
-    </div>
-  )
-}
+
+
 
 export function TrendingMoviesSection({ items }) {
   const scrollRef = useRef(null)
@@ -171,6 +157,59 @@ export function ComingSoonSection({ items }) {
         <Link to="/coming-soon" className="primary-btn" style={{ padding: '12px 28px', textDecoration: 'none', display: 'inline-block' }}>
           Összes hamarosan érkező film megtekintése →
         </Link>
+      </div>
+    </section>
+  )
+}
+
+export function TrendingPeopleSection({ items }) {
+  const scrollRef = useRef(null)
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = direction === 'left' ? -400 : 400
+      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
+    }
+  }
+
+  return (
+    <section className="content-section">
+      <div className="section-header">
+        <div>
+          <h2>Trending People</h2>
+          <p>Most anticipated movies and TV shows this week</p>
+        </div>
+
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button onClick={() => scroll('left')} className="secondary-btn" style={{ padding: '8px 14px', borderRadius: '6px' }}>◀</button>
+          <button onClick={() => scroll('right')} className="secondary-btn" style={{ padding: '8px 14px', borderRadius: '6px' }}>▶</button>
+        </div>
+      </div>
+
+      <div ref={scrollRef} className="movie-grid trending-grid">
+        {items.map((movie) => (
+          <article key={movie.id || movie.title} className="poster-card">
+            <div className="poster-image-wrap">
+              <img src={movie.image} alt={movie.title} className="poster-image" />
+            </div>
+
+            <div className="card-body">
+              <div className="card-rating">
+                <img src={imgStar} alt="" className="star-icon" />
+                <span>{movie.rating}</span>
+              </div>
+
+              <div className="card-meta-block">
+                <h3>{movie.title}</h3>
+                <div className="card-meta-row">
+                  <span>{movie.year}</span>
+                  {movie.genre && <img src={imgEllipse1} alt="" className="tiny-dot" />}
+                  {movie.genre && <span>{movie.genre}</span>}
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   )

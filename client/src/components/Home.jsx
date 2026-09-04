@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react'
 import HeroSection from './HeroSection'
-import { TrendingMoviesSection, TopRatedMoviesSection, ComingSoonSection } from './MovieSection'
+import { TrendingMoviesSection, TopRatedMoviesSection, ComingSoonSection,TrendingPeopleSection} from './MovieSection'
 import NewsSection from './NewsSection'
 import { upcomingMovies, newsFeed } from '../data/movieData'
-
 export default function Home() {
   const [trending, setTrending] = useState([])
   const [loading, setLoading] = useState(true)
   const [topRated, setTopRated] = useState([])
   const [upcomingMovies, setUpcomingMovies] = useState([])
-
+  const [trendingPeople, setTrendingPeople] = useState([])
 
   useEffect(() => {
     // 1. Trending lekérés
@@ -50,6 +49,7 @@ export default function Home() {
         <>
           <TopRatedMoviesSection items={topRated} />
           <ComingSoonSection items={upcomingMovies} />
+          <TrendingPeopleSection items={trendingPeople} />
           <NewsSection items={newsFeed} />
         </>
       )}
