@@ -54,4 +54,14 @@ exports.getComingSoonMovies = async (req, res) => {
     res.status(500).json({ message: 'Szerver hiba a filmek lekérésekor' })
   }
 }
+
+exports.getTrendingPeople = async (req, res) => {
+  try {
+    const people = await tmdbService.fetchTrendingPeople()
+    res.json(people)
+  } catch (error) {
+    console.error('Hiba a getTrendingPeople-ben:', error)
+    res.status(500).json({ message: 'Szerver hiba a filmek lekérésekor' })
+  }
+}
 exports.getNewReleaseMovies = exports.getComingSoonMovies

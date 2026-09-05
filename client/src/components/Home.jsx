@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import HeroSection from './HeroSection'
-import { TrendingMoviesSection, TopRatedMoviesSection, ComingSoonSection,TrendingPeopleSection} from './MovieSection'
+import { TopRatedMoviesSection, ComingSoonSection,TrendingPeopleSection} from './MovieSection'
 import NewsSection from './NewsSection'
-import { upcomingMovies, newsFeed } from '../data/movieData'
+import { newsFeed } from '../data/movieData'
 export default function Home() {
   const [trending, setTrending] = useState([])
   const [loading, setLoading] = useState(true)
@@ -34,6 +34,12 @@ export default function Home() {
         console.error('Hiba az Upcoming API lekérésekor:', err)
         setLoading(false)
       })
+
+    // 4. Trending People lekérés
+    fetch('http://localhost:3000/api/movies/trending-people')
+      .then((res) => res.json())
+      .then((data) => setTrendingPeople(data))
+      .catch((err) => console.error(err))
   }, []) // <-- Az üres függőségi tömb szigorúan a useEffect LEGVÉGÉN van!
 
 

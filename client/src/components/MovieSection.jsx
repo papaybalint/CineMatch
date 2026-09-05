@@ -1,10 +1,6 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { imgStar, imgEllipse1, imgArrowRight } from '../data/movieData'
-
-
-
-
+import { imgStar, imgEllipse1 } from '../data/movieData'
 
 export function TrendingMoviesSection({ items }) {
   const scrollRef = useRef(null)
@@ -177,7 +173,7 @@ export function TrendingPeopleSection({ items }) {
       <div className="section-header">
         <div>
           <h2>Trending People</h2>
-          <p>Most anticipated movies and TV shows this week</p>
+          <p>Most popular actors and actresses of the week</p>
         </div>
 
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
@@ -187,24 +183,21 @@ export function TrendingPeopleSection({ items }) {
       </div>
 
       <div ref={scrollRef} className="movie-grid trending-grid">
-        {items.map((movie) => (
-          <article key={movie.id || movie.title} className="poster-card">
+        {(items || []).map((person) => (
+          <article key={person.id || person.name} className="poster-card">
             <div className="poster-image-wrap">
-              <img src={movie.image} alt={movie.title} className="poster-image" />
+              <img src={person.image} alt={person.name} className="poster-image" />
             </div>
 
             <div className="card-body">
               <div className="card-rating">
-                <img src={imgStar} alt="" className="star-icon" />
-                <span>{movie.rating}</span>
+                <span>🌟 {person.popularity || 'N/A'}</span>
               </div>
 
               <div className="card-meta-block">
-                <h3>{movie.title}</h3>
+                <h3>{person.name}</h3>
                 <div className="card-meta-row">
-                  <span>{movie.year}</span>
-                  {movie.genre && <img src={imgEllipse1} alt="" className="tiny-dot" />}
-                  {movie.genre && <span>{movie.genre}</span>}
+                  <span>{person.knownFor || person.department}</span>
                 </div>
               </div>
             </div>

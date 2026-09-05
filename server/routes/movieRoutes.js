@@ -9,4 +9,5 @@ router.get('/toprated', movieController.getTopRatedMovies)
 router.get('/upcoming', movieController.getUpcomingMovies)
 router.get('/coming-soon', movieController.getComingSoonMovies)
 router.get('/new-releases', movieController.getComingSoonMovies)
+router.get('/trending-people', movieController.getTrendingPeople)
 module.exports = router

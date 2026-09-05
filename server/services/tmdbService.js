@@ -180,6 +180,30 @@ exports.trendingNow = async (page = 1, limit = 20) => {
   }))
 }
 
+exports.fetchTrendingPeople = async (page = 1, limit = 20) => {
+  const apiKey = process.env.TMDB_API_KEY
+  if (!apiKey) {
+    throw new Error('TMDB API kulcs nem található az környezeti változókban!')
+  }
 
+  const [res1, res2] = await Promise.all([
+    fetch(`https://api.themoviedb.org/3/trending/person/day?api_key=${apiKey}&page=${page}`).then(r => r.json()),
+    fetch(`https://api.themoviedb.org/3/trending/person/day?api_key=${apiKey}&page=${page + 1}`).then(r => r.json())
+  ])
+  const combined = [...(res1.results || []), ...(res2.results || [])]
+
+  return combined.slice(0, limit).map((person) => ({
+    id: person.id,
+    name: person.name || person.title,
+    department: person.known_for_department || 'N/A',
+    popularity: person.popularity ? person.popularity.toFixed(0) : 'N/A',
+    knownFor: (person.known_for || []).map(k => k.title || k.name).filter(Boolean).slice(0, 2).join(', '),
+    image: person.profile_path 
+      ? `https://image.tmdb.org/t/p/w500${person.profile_path}` 
+      : NO_POSTER_IMAGE
+  }))
+}
+
+exports.trendingPeople = exports.fetchTrendingPeople
 exports.fetchNewReleaseMovies = exports.fetchComingSoonMovies
 
