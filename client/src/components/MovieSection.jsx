@@ -191,7 +191,7 @@ export function TrendingPeopleSection({ items }) {
 
             <div className="card-body">
               <div className="card-rating">
-                <span>🌟 {person.popularity || 'N/A'}</span>
+                <span>🔥 {person.popularity || 'N/A'}</span>
               </div>
 
               <div className="card-meta-block">
